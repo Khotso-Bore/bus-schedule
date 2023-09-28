@@ -57,7 +57,7 @@ export const getEstimatedTimes = async () => {
       {
         headers: {
           "Content-Type": "application/json",
-          "X-Goog-Api-Key": "AIzaSyAj6s40R7qL_GnzIwJqEEefOQ4HIK-AF8U",
+          "X-Goog-Api-Key": "",
           "X-Goog-FieldMask":
             "routes.duration,routes.distanceMeters,routes.legs.distanceMeters,routes.legs.duration",
         },
