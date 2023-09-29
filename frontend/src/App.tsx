@@ -10,14 +10,11 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      console.log("hello");
       const response = await getBusRoute();
-      //console.log(response);
       if (response) {
         SetBusRoute(response);
       }
     })();
-    console.log("hello");
   }, []);
 
   return (

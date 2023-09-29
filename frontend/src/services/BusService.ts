@@ -31,12 +31,10 @@ export const getBusesOnRoute = async () => {
 export const getBusRoute = async () => {
   try {
     const reponse: AxiosResponse<BusRoute> = await axios.get<BusRoute>(
-      "http://localhost:4000/api/busroutes"
+      `${import.meta.env.VITE_API_URL}/busroutes`
     );
 
     const busRoute = reponse.data;
-
-    console.log("fthfhf");
 
     return busRoute;
   } catch (error) {
