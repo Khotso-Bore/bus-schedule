@@ -1,5 +1,4 @@
-import L from "leaflet";
-import { BusPosition, BusPositions } from "../Types/BusPositions";
+import { BusPositions } from "../Types/BusPositions";
 import axios, { AxiosResponse } from "axios";
 import { BusRoute } from "../Types/BusRoute";
 

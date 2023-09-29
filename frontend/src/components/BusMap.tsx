@@ -1,21 +1,9 @@
-import {
-  MapContainer,
-  Marker,
-  Polygon,
-  Polyline,
-  Popup,
-  TileLayer,
-  useMap,
-  useMapEvents,
-} from "react-leaflet";
+import { MapContainer, Marker, Polyline, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L, { Path } from "leaflet";
+import L from "leaflet";
 import { useEffect, useState } from "react";
 import { getBusesOnRoute } from "../services/BusService";
 import { BusPosition } from "../Types/BusPositions";
-import busIcon from "../assets/bus.png";
-import busStopIcon from "../assets/bus-stop.png";
-import busStopIcon1 from "../assets/bus-stop-1.png";
 import busStopIcon2 from "../assets/bus-stop-2.png";
 import { Bound, Stop, Path as BusPath } from "../Types/BusRoute";
 

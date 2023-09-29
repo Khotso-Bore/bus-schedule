@@ -1,4 +1,3 @@
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "./App.css";
 import { BusMap } from "./components/BusMap";
 import { MainSchedule } from "./components/MainSchedule";

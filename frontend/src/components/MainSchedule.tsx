@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { MainDepartPoint, SecondaryDepartPoint } from "../Types/BusRoute";
 
-let itemIndex = 0;
-
 const convertToSeconds = (time: string): number => {
   const arr = time.split(":");
   const seconds = Number(arr[0]) * 3600 + Number(arr[1]) * 60 + Number(arr[2]);
