@@ -4,7 +4,6 @@ import { MainSchedule } from "./components/MainSchedule";
 import { useEffect, useState } from "react";
 import { BusRoute } from "./Types/BusRoute";
 import { getBusRoute } from "./services/BusService";
-import { Bounds } from "leaflet";
 import Select from "react-select";
 
 function App() {
@@ -84,8 +83,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const pos = stations.find((x) => x.city == city) ?? undefined;
-
     (async () => {
       console.log("hello area");
       const response = await getBusRoute(city, area);
