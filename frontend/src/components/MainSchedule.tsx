@@ -1,31 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { MainDepartPoint, SecondaryDepartPoint } from "../Types/BusRoute";
+import { MainDeparturePoint, SecondaryDeparturePoint } from "../Types/BusRoute";
 
 const convertToSeconds = (time: string): number => {
   const arr = time.split(":");
+  arr[2] = "00";
   const seconds = Number(arr[0]) * 3600 + Number(arr[1]) * 60 + Number(arr[2]);
   return seconds;
 };
 
-const getCurrentTimeInterval = (currentTimeinSeconds: number): number => {
-  if (currentTimeinSeconds <= convertToSeconds("09:30:00")) return 10;
-
-  if (
-    currentTimeinSeconds > convertToSeconds("09:30:00") &&
-    currentTimeinSeconds <= convertToSeconds("15:30:00")
-  )
-    return 20;
-
-  if (
-    currentTimeinSeconds > convertToSeconds("15:30:00") &&
-    currentTimeinSeconds <= convertToSeconds("19:30:00")
-  )
-    return 10;
-
-  return 20;
-};
-
-const highlight = (deprtTime: string): boolean => {
+const highlight = (departureTimes: string[]): number => {
   const currentTime = new Intl.DateTimeFormat("default", {
     hour: "numeric",
     minute: "numeric",
@@ -34,22 +17,39 @@ const highlight = (deprtTime: string): boolean => {
   }).format(new Date());
 
   const currentTimeinSeconds = convertToSeconds(currentTime);
-  const departTimeinSeconds = convertToSeconds(deprtTime);
+
+  if (departureTimes.length == 0) return 0;
+
+  if (currentTimeinSeconds <= convertToSeconds(departureTimes[0])) return 0;
+
+  // console.log(
+  //   currentTimeinSeconds >=
+  //     convertToSeconds(departureTimes[departureTimes.length - 1])
+  // );
 
   if (
-    currentTimeinSeconds >
-      departTimeinSeconds - getCurrentTimeInterval(currentTimeinSeconds) * 60 &&
-    currentTimeinSeconds <= departTimeinSeconds
-  ) {
-    return true;
+    currentTimeinSeconds >=
+    convertToSeconds(departureTimes[departureTimes.length - 1])
+  )
+    return departureTimes.length - 1;
+
+  for (let index = 1; index < departureTimes.length; index++) {
+    if (
+      currentTimeinSeconds > convertToSeconds(departureTimes[index - 1]) &&
+      currentTimeinSeconds <= convertToSeconds(departureTimes[index])
+    ) {
+      console.log(departureTimes[index - 1]);
+      console.log(departureTimes[index]);
+      return index;
+    }
   }
 
-  return false;
+  return 0;
 };
 
 interface Props {
-  mainDepartPoint: MainDepartPoint;
-  secondaryDepratPoint: SecondaryDepartPoint;
+  mainDepartPoint: MainDeparturePoint;
+  secondaryDepratPoint: SecondaryDeparturePoint;
 }
 
 export const MainSchedule = ({
@@ -61,33 +61,43 @@ export const MainSchedule = ({
   const [secondaryIndex, setSecondaryIndex] = useState(0);
 
   useEffect(() => {
-    const a = mainDepartPoint.departTimes!.findIndex((time) => highlight(time));
-    const b = secondaryDepratPoint.departTimes!.findIndex((time) =>
-      highlight(time)
-    );
+    const a = highlight(mainDepartPoint.departureTimes);
+    const b = highlight(secondaryDepratPoint.departureTimes);
 
     setMainIndex(a);
     setSecondaryIndex(b);
 
     const interval = setInterval(() => {
-      const a = mainDepartPoint.departTimes!.findIndex((time) =>
-        highlight(time)
-      );
-      const b = secondaryDepratPoint.departTimes!.findIndex((time) =>
-        highlight(time)
-      );
+      const a = highlight(mainDepartPoint.departureTimes);
+      const b = highlight(secondaryDepratPoint.departureTimes);
 
+      console.log(b);
       setMainIndex(a);
       setSecondaryIndex(b);
     }, 1000 * 60 * 2);
 
     divRef.current!.scrollTo({
-      top: (b - 2) * 24,
+      top: (a - 1) * 24,
       behavior: "instant",
     });
 
     return () => clearInterval(interval);
   }, [divRef]);
+
+  useEffect(() => {
+    const a = highlight(mainDepartPoint.departureTimes);
+    const b = highlight(secondaryDepratPoint.departureTimes);
+
+    setMainIndex(a);
+    setSecondaryIndex(b);
+
+    divRef.current!.scrollTo({
+      top: (a - 1) * 24,
+      behavior: "instant",
+    });
+
+    // return () => clearInterval(interval);
+  }, [mainDepartPoint]);
 
   return (
     <div>
@@ -100,26 +110,26 @@ export const MainSchedule = ({
           className="col-span-2 grid grid-cols-2 h-24 overflow-y-scroll"
         >
           <div>
-            {mainDepartPoint.departTimes!.map((time, index) => (
+            {mainDepartPoint.departureTimes!.map((time, index) => (
               <p
                 key={index}
                 className={` ${
                   mainIndex == index ? "bg-green-200" : "bg-none"
                 }`}
               >
-                {time.slice(0, -3)}
+                {time}
               </p>
             ))}
           </div>
           <div>
-            {secondaryDepratPoint.departTimes!.map((time, index) => (
+            {secondaryDepratPoint.departureTimes!.map((time, index) => (
               <p
                 key={index}
                 className={` ${
                   secondaryIndex == index ? "bg-green-200" : "bg-none"
                 }`}
               >
-                {time.slice(0, -3)}
+                {time}
               </p>
             ))}
           </div>
