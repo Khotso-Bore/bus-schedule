@@ -1,9 +1,11 @@
 const express = require("express");
 
-const { getRoute } = require("../controllers/busRoutesController");
+const { getRoute, getRoutes } = require("../controllers/busRoutesController");
 
 const router = express.Router();
 
-router.get("/", getRoute);
+router.get("/", getRoutes);
+
+router.get("/route", getRoute);
 
 module.exports = router;
