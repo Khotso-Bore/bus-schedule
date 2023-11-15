@@ -1,38 +1,30 @@
 export interface BusRoute {
-  mainDepartPoint: MainDepartPoint;
-  secondaryDepartPoint: SecondaryDepartPoint;
-  _id: string;
+  _id: Id;
   route: string;
-  routeName: string;
+  area: string;
+  city: string;
+  mainDeparturePoint: MainDeparturePoint;
+  secondaryDeparturePoint: SecondaryDeparturePoint;
   stops: Stop[];
-  bounds: Bound[];
-  path: Path[];
+  path: number[][];
 }
 
-export interface MainDepartPoint {
-  name: string;
-  departTimes: string[];
+export interface Id {
+  $oid: string;
 }
 
-export interface SecondaryDepartPoint {
+export interface MainDeparturePoint {
   name: string;
-  departTimes: string[];
+  departureTimes: string[];
+}
+
+export interface SecondaryDeparturePoint {
+  name: string;
+  departureTimes: string[];
 }
 
 export interface Stop {
-  id: number;
-  bustStopId: string;
+  code: string;
   street: string;
-  lat: number;
-  lng: number;
-}
-
-export interface Bound {
-  lng: number;
-  lat: number;
-}
-
-export interface Path {
-  lat: number;
-  lng: number;
+  latLng: number[];
 }
