@@ -28,10 +28,12 @@ export const getBusesOnRoute = async () => {
   }
 };
 
-export const getBusRoute = async () => {
+export const getBusRoute = async (city: string, area: string) => {
   try {
     const reponse: AxiosResponse<BusRoute> = await axios.get<BusRoute>(
-      `${import.meta.env.VITE_API_URL}/busroutes`
+      `${
+        import.meta.env.VITE_API_URL
+      }/busroutes/route?city=${city}&area=${area}`
     );
 
     const busRoute = reponse.data;
