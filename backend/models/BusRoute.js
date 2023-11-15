@@ -3,36 +3,39 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const busRouteSchema = new Schema({
+  _id: {
+    type: "ObjectId",
+  },
   route: {
     type: "String",
   },
-  routeName: {
+  area: {
     type: "String",
   },
-  mainDepartPoint: {
+  city: {
+    type: "String",
+  },
+  mainDeparturePoint: {
     name: {
       type: "String",
     },
-    departTimes: {
+    departureTimes: {
       type: ["String"],
     },
   },
-  secondaryDepartPoint: {
+  secondaryDeparturePoint: {
     name: {
       type: "String",
     },
-    departTimes: {
+    departureTimes: {
       type: ["String"],
     },
   },
   stops: {
     type: ["Mixed"],
   },
-  bounds: {
-    type: ["Mixed"],
-  },
   path: {
-    type: ["Mixed"],
+    type: ["Array"],
   },
 });
 
