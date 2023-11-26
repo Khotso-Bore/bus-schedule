@@ -2,6 +2,7 @@ import {
   MapContainer,
   Marker,
   Polyline,
+  Popup,
   TileLayer,
   useMap,
 } from "react-leaflet";
@@ -89,7 +90,13 @@ export const BusMap = ({ path, stationCoordinates, stops }: Props) => {
               iconSize: new L.Point(25, 25),
             })
           }
-        />
+        >
+          <Popup>
+            {stop.code}
+            <br></br>
+            {stop.street}
+          </Popup>
+        </Marker>
       ))}
       {busses === undefined
         ? null
