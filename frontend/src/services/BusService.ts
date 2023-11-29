@@ -1,5 +1,5 @@
 import { BusPositions } from "../Types/BusPositions";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { BusRoute } from "../Types/BusRoute";
 import * as Realm from "realm-web";
 
