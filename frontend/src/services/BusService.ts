@@ -1,6 +1,7 @@
 import { BusPositions } from "../Types/BusPositions";
 import axios, { AxiosResponse } from "axios";
 import { BusRoute } from "../Types/BusRoute";
+import * as Realm from "realm-web";
 
 export const getBusesOnRoute = async () => {
   try {
@@ -28,15 +29,34 @@ export const getBusesOnRoute = async () => {
   }
 };
 
+// export const getBusRoute = async (city: string, area: string) => {
+//   try {
+//     const reponse: AxiosResponse<BusRoute> = await axios.get<BusRoute>(
+//       `${
+//         import.meta.env.VITE_API_URL
+//       }/busroutes/route?city=${city}&area=${area}`
+//     );
+
+//     const busRoute = reponse.data;
+
+//     return busRoute;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
 export const getBusRoute = async (city: string, area: string) => {
   try {
-    const reponse: AxiosResponse<BusRoute> = await axios.get<BusRoute>(
-      `${
-        import.meta.env.VITE_API_URL
-      }/busroutes/route?city=${city}&area=${area}`
-    );
+    const app = new Realm.App({ id: import.meta.env.VITE_APP_ID });
+    const credentials = Realm.Credentials.anonymous();
+    const user = await app.logIn(credentials);
 
-    const busRoute = reponse.data;
+    const result = await user.functions.getBusRoute(city, area);
+    //console.log(result);
+
+    const busRoute = result as BusRoute;
+
+    console.log(busRoute);
 
     return busRoute;
   } catch (error) {
