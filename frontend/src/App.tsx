@@ -122,6 +122,7 @@ function App() {
             stops={busRoute!.stops}
             stationCoordinates={stations.find((x) => x.city == city)?.latLng!}
             path={busRoute!.path}
+            station={city}
           />
         </div>
       ) : (

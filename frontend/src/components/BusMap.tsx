@@ -13,12 +13,14 @@ import { getBusesOnRoute } from "../services/BusService";
 import { BusPosition } from "../Types/BusPositions";
 import busStopIcon2 from "../assets/bus-stop-2.png";
 import busIcon from "../assets/busIcon4.png";
+import busStation from "../assets/gautrainlogo.png";
 import { Stop } from "../Types/BusRoute";
 
 interface Props {
   stops: Stop[];
   stationCoordinates: number[];
   path: number[][];
+  station: string;
 }
 
 interface ChangeViewProps {
@@ -26,7 +28,7 @@ interface ChangeViewProps {
   zoom: number;
 }
 
-export const BusMap = ({ path, stationCoordinates, stops }: Props) => {
+export const BusMap = ({ path, stationCoordinates, stops, station }: Props) => {
   const [busses, SetBusses] = useState<BusPosition[]>();
   const [mapCenter, SetMapCenter] = useState([0, 0]);
 
@@ -80,6 +82,7 @@ export const BusMap = ({ path, stationCoordinates, stops }: Props) => {
         pathOptions={{ color: "DodgerBlue", weight: 8 }}
         positions={path.map((x) => [x[1], x[0]])}
       />
+
       {stops.map((stop) => (
         <Marker
           key={stop.code}
@@ -112,6 +115,17 @@ export const BusMap = ({ path, stationCoordinates, stops }: Props) => {
               }
             />
           ))}
+      <Marker
+        position={[mapCenter[0], mapCenter[1]]}
+        icon={
+          new L.Icon({
+            iconUrl: busStation,
+            iconSize: new L.Point(30, 30),
+          })
+        }
+      >
+        <Popup>{station} Gautrain Station</Popup>
+      </Marker>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
