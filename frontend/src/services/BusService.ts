@@ -2,6 +2,7 @@ import { BusPositions } from "../Types/BusPositions";
 import axios from "axios";
 import { BusRoute } from "../Types/BusRoute";
 import * as Realm from "realm-web";
+import routes from "../routes.json"
 
 export const getBusesOnRoute = async () => {
   try {
@@ -46,17 +47,23 @@ export const getBusesOnRoute = async () => {
 // };
 
 export const getBusRoute = async (city: string, area: string) => {
-  try {
-    const app = new Realm.App({ id: import.meta.env.VITE_APP_ID });
-    const credentials = Realm.Credentials.anonymous();
-    const user = await app.logIn(credentials);
 
-    const result = await user.functions.getBusRoute(city, area);
+  try {
+    // const app = new Realm.App({ id: import.meta.env.VITE_APP_ID });
+    // const credentials = Realm.Credentials.anonymous();
+    // const user = await app.logIn(credentials);
+
+    // const result = await user.functions.getBusRoute(city, area);
     //console.log(result);
 
-    const busRoute = result as BusRoute;
+    //const busRoute = result as BusRoute;
 
-    console.log(busRoute);
+    const busRoutes = routes as BusRoute[]
+
+    let busRoute = busRoutes.find(x => x.city == city && x.area == area)
+
+    //console.log(routes)
+    //console.log(busRoute);
 
     return busRoute;
   } catch (error) {
