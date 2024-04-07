@@ -1,7 +1,6 @@
 import { BusPositions } from "../Types/BusPositions";
 import axios from "axios";
 import { BusRoute } from "../Types/BusRoute";
-import * as Realm from "realm-web";
 import routes from "../routes.json"
 
 export const getBusesOnRoute = async () => {
