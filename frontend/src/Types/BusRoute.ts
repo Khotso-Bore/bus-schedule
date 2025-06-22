@@ -7,6 +7,7 @@ export interface BusRoute {
   secondaryDeparturePoint: SecondaryDeparturePoint;
   stops: Stop[];
   path: number[][];
+  endStop: Stop;
 }
 
 export interface Id {

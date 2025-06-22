@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { BusRoute } from "./Types/BusRoute";
 import { getBusRoute } from "./services/BusService";
 import Select from "react-select";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   const [busRoute, SetBusRoute] = useState<BusRoute>();
@@ -128,6 +129,7 @@ function App() {
       ) : (
         <div>Loading Data...</div>
       )}
+      <Analytics />
     </>
   );
 }
